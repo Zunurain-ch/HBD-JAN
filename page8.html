@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Eman</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a0a2e, #4b0082, #8a2be2, #ff00ff, #00ffff);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Decorative elements */
+        .corner-decoration {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            z-index: 1;
+        }
+
+        .top-left {
+            top: 0;
+            left: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%23ff00ff" d="M0,0 L200,0 L0,200 Z"/><circle cx="30" cy="30" r="15" fill="%23ffff00"/><circle cx="70" cy="50" r="12" fill="%2300ffff"/><circle cx="50" cy="90" r="10" fill="%23ff69b4"/></svg>') no-repeat;
+        }
+
+        .top-right {
+            top: 0;
+            right: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%2300ffff" d="M200,0 L200,200 L0,0 Z"/><circle cx="170" cy="30" r="15" fill="%23ffff00"/><circle cx="130" cy="50" r="12" fill="%23ff00ff"/><circle cx="150" cy="90" r="10" fill="%2366ff66"/></svg>') no-repeat;
+        }
+
+        .balloon {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .ribbon {
+            position: absolute;
+            height: 40px;
+            width: 100%;
+            background: linear-gradient(90deg, 
+                #ff0000, #ff7f00, #ffff00, #00ff00, 
+                #0000ff, #4b0082, #9400d3);
+            background-size: 200% 100%;
+            animation: ribbonFlow 5s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes ribbonFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .top-ribbon {
+            top: 0;
+            clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+        }
+
+        .bottom-ribbon {
+            bottom: 0;
+            clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+        }
+
+        /* Title */
+        .title {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 3.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, 
+                #ff0000, #ff7f00, #ffff00, #00ff00, 
+                #0000ff, #4b0082, #9400d3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 400% 400%;
+            animation: gradientText 8s ease infinite;
+            text-shadow: 0 2px 10px rgba(255,255,255,0.3);
+            z-index: 10;
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Twinkling lights */
+        .light {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+            z-index: 0;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Cake Container */
+        .cake-container {
+            position: relative;
+            width: 350px;
+            height: 450px;
+            z-index: 10;
+            margin-bottom: 30px;
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+        }
+
+        /* Realistic Cake */
+        .cake {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .cake-base {
+            position: absolute;
+            bottom: 0;
+            width: 350px;
+            height: 140px;
+            background: #f8c8dc;
+            background-image: 
+                radial-gradient(circle at 30% 70%, #f3a8c8 10%, transparent 10%),
+                radial-gradient(circle at 70% 30%, #f3a8c8 10%, transparent 10%);
+            background-size: 20px 20px;
+            border-radius: 175px 175px 0 0;
+            box-shadow: 
+                inset 0 -20px 0 0 #f3a8c8,
+                0 15px 25px rgba(0,0,0,0.3);
+        }
+
+        .cake-top {
+            position: absolute;
+            bottom: 140px;
+            width: 250px;
+            height: 100px;
+            left: 50px;
+            background: #fff8f0;
+            background-image: 
+                radial-gradient(circle at 10% 10%, #f8e8dc 15%, transparent 15%),
+                radial-gradient(circle at 90% 90%, #f8e8dc 15%, transparent 15%);
+            background-size: 30px 30px;
+            border-radius: 125px 125px 0 0;
+            box-shadow: 
+                inset 0 -12px 0 0 #f8e8dc,
+                0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .frosting {
+            position: absolute;
+            width: 350px;
+            height: 20px;
+            bottom: 140px;
+            background: #fff;
+            background-image: 
+                linear-gradient(to right, 
+                    #fff 0%, #ffd6eb 20%, #fff 40%, 
+                    #ffd6eb 60%, #fff 80%, #ffd6eb 100%);
+            border-radius: 10px;
+            box-shadow: 
+                0 6px 0 0 #f8e8dc,
+                0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .cherry {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            bottom: 230px;
+            left: 162px;
+            background: #ff0000;
+            background-image: 
+                radial-gradient(circle at 30% 30%, #ff6b6b 10%, transparent 10%),
+                radial-gradient(circle at 70% 70%, #cc0000 20%, transparent 20%);
+            border-radius: 50%;
+            box-shadow: 
+                0 3px 0 0 #cc0000,
+                0 0 8px rgba(0,0,0,0.3);
+            z-index: 15;
+        }
+
+        .cherry-stem {
+            position: absolute;
+            width: 3px;
+            height: 35px;
+            bottom: 255px;
+            left: 174px;
+            background: #228b22;
+            transform: rotate(-20deg);
+            z-index: 14;
+        }
+
+        /* Candle */
+        .candle {
+            position: absolute;
+            width: 12px;
+            height: 70px;
+            bottom: 240px;
+            left: 169px;
+            background: linear-gradient(to bottom, #ff69b4, #ff1493);
+            box-shadow: 
+                inset 0 0 8px rgba(255,255,255,0.7),
+                0 0 10px rgba(255,105,180,0.8);
+            z-index: 12;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .flame {
+            position: absolute;
+            width: 18px;
+            height: 35px;
+            bottom: 310px;
+            left: 166px;
+            background: linear-gradient(to top, #ff9500, #ffcc00, white);
+            border-radius: 50% 50% 20% 20%;
+            filter: blur(2px);
+            animation: flicker 0.5s infinite alternate;
+            z-index: 13;
+        }
+
+        @keyframes flicker {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1, 0.9); opacity: 0.8; }
+        }
+
+        /* Button */
+        .cut-button {
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(255, 20, 147, 0.5);
+            transition: all 0.3s ease;
+            z-index: 20;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cut-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 20, 147, 0.7);
+        }
+
+        .cut-button:active {
+            transform: translateY(2px);
+        }
+
+        .cut-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.4),
+                transparent
+            );
+            transition: all 0.7s;
+        }
+
+        .cut-button:hover::before {
+            left: 100%;
+        }
+
+        /* Popup Note */
+        .cake-note {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 150%;
+            max-width: 700px;
+            padding: 30px;
+            background: linear-gradient(135deg, #fff0f5, #ffe6ee);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            z-index: 100;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: hwb(345 16% 25%);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            line-height: 1.6;
+        }
+
+        .cake-note.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            opacity: 1;
+            transform: rotate(90deg);
+        }
+
+        .close-btn::before, .close-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 3px;
+            background: #ff1493;
+        }
+
+        .close-btn::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .close-btn::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        /* Celebration Effects */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--color);
+            opacity: 0;
+            z-index: 15;
+            animation: confettiFall 4s linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { 
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Floating Hearts */
+        .floating-heart {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: floatUp 8s linear infinite;
+            opacity: 0;
+            z-index: 5;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        .romantic-next-button {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: linear-gradient(45deg, #ff69b4, #ff1493, #ff6ec7);
+    color: white;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 14px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.8), 0 0 30px rgba(255, 20, 147, 0.6);
+    animation: glowPulse 2s ease-in-out infinite;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.romantic-next-button:hover {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 0 25px rgba(255, 105, 180, 1), 0 0 45px rgba(255, 20, 147, 0.9);
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(255, 105, 180, 0.8), 0 0 30px rgba(255, 20, 147, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(255, 182, 193, 1), 0 0 40px rgba(255, 105, 180, 0.9);
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Decorative Elements -->
+    <div class="corner-decoration top-left"></div>
+    <div class="corner-decoration top-right"></div>
+    <div class="ribbon top-ribbon"></div>
+    <div class="ribbon bottom-ribbon"></div>
+    
+    <!-- Title -->
+    <h1 class="title">Happy Birthday Maryam</h1>
+    
+    <!-- Cake Container -->
+    <div class="cake-container" id="cakeContainer">
+        <div class="cake">
+            <div class="cake-base"></div>
+            <div class="frosting"></div>
+            <div class="cake-top"></div>
+            <div class="candle"></div>
+            <div class="flame" id="flame"></div>
+            <div class="cherry"></div>
+            <div class="cherry-stem"></div>
+        </div>
+    </div>
+
+    <button class="cut-button" id="cutButton">Cut the Cake!</button>
+
+    <div class="cake-note" id="cakeNote">
+        <div class="close-btn" id="closeBtn"></div>
+        HAPPY BIRTHDAY TO MY FOREVER PERSON 💕
+        <br><br>
+"Aaj woh din hai jab taare tumhare liye ek saath aaye 🌠
+<br>
+Jab zindagi ne tumhein pyaar, khushi aur roshni se bhar diya ✨
+<br>
+Tumhari duniya mein maine apna ghar paya hai 🏠
+<br>
+Tumhari muskaan mere din ko roshan karti hai 
+<br>
+Aur tumhari awaaz mere dil ki dhadkan hai ❤
+<br>
+Tumhari zarooraton ko poora karne ke liye main hamesha taiyaar hoon 🤝
+<br>
+Tumhari sapnon ko sach karne ke liye main hamesha saath hoon 🌟
+<br>
+Tumhari khushi mere liye sabse badi daulat hai 💎
+<br>
+Is saal tumhari zindagi mein aur bhi pyaar, khushi aur roshni ho 🎉
+<br>
+Aur main tumhare saath hamesha khada raho 💗
+<br>
+Happy Birthday, meri jaan, meri duniya, meri har cheez! 🎂
+    </div>
+
+    <script>
+        // Create balloons
+        function createBalloons() {
+            const colors = ['#ff0000', '#ff69b4', '#66a3ff', '#7cfc00', '#ffd700', '#9370db', '#00bfff'];
+            const positions = ['10%', '20%', '30%', '70%', '80%', '90%'];
+            
+            for (let i = 0; i < 12; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.width = `${Math.random() * 60 + 40}px`;
+                balloon.style.height = balloon.style.width;
+                balloon.style.background = `radial-gradient(circle at 30% 30%, ${colors[Math.floor(Math.random() * colors.length)]}, ${colors[Math.floor(Math.random() * colors.length)]})`;
+                balloon.style.left = positions[Math.floor(Math.random() * positions.length)];
+                balloon.style.top = `${Math.random() * 100 + 100}%`;
+                balloon.style.animationDelay = `${Math.random() * 5}s`;
+                document.body.appendChild(balloon);
+            }
+        }
+
+        // Create twinkling lights
+        function createLights() {
+            for (let i = 0; i < 50; i++) {
+                const light = document.createElement('div');
+                light.className = 'light';
+                light.style.left = `${Math.random() * 100}%`;
+                light.style.top = `${Math.random() * 100}%`;
+                light.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                light.style.animationDelay = `${Math.random() * 2}s`;
+                light.style.animationDuration = `${Math.random() * 2 + 1}s`;
+                document.body.appendChild(light);
+            }
+        }
+
+        // Create celebration confetti
+        function createConfetti() {
+            const colors = ['#ff69b4', '#66a3ff', '#7cfc00', '#ffd700', '#9370db', '#00bfff'];
+            
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.setProperty('--color', colors[Math.floor(Math.random() * colors.length)]);
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = `-10px`;
+                confetti.style.animationDelay = `${Math.random() * 2}s`;
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Create floating hearts
+        function createHearts() {
+            const hearts = ['❤️', '🧡', '💛', '💚', '💙', '💜', '💖', '🎂', '🎉'];
+            
+            for (let i = 0; i < 40; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.bottom = '0';
+                heart.style.animationDuration = `${Math.random() * 6 + 6}s`;
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+                heart.style.fontSize = `${Math.random() * 2 + 1.5}rem`;
+                heart.style.color = `hsl(${Math.random() * 60 + 330}, 100%, 70%)`;
+                document.body.appendChild(heart);
+            }
+        }
+
+        // Handle cake cutting
+        document.getElementById('cutButton').addEventListener('click', function() {
+            // Blow out candle
+            const flame = document.getElementById('flame');
+            flame.style.animation = 'none';
+            flame.style.transform = 'scale(0)';
+            flame.style.opacity = '0';
+            
+            // Cut the cake animation
+            const cakeContainer = document.getElementById('cakeContainer');
+            cakeContainer.style.transform = 'scale(0.9) rotate(5deg)';
+            
+            // Show celebration
+            createConfetti();
+            createHearts();
+            
+            // Show popup note after delay
+            setTimeout(() => {
+                document.getElementById('cakeNote').classList.add('show');
+            }, 1000);
+            
+            // Disable button after click
+            this.disabled = true;
+            this.style.opacity = '0.7';
+            this.style.transform = 'translateY(2px)';
+        });
+
+        // Close popup
+        document.getElementById('closeBtn').addEventListener('click', function() {
+            document.getElementById('cakeNote').classList.remove('show');
+        });
+
+        // Initialize effects
+        window.onload = function() {
+            createBalloons();
+            createLights();
+            createHearts();
+            setInterval(createHearts, 4000);
+        };
+    </script>
+    <a href="page9.html" class="romantic-next-button">❤️ Next ❤️</a>
+
+</body>
+</html>

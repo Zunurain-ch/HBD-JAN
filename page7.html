@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>I Love You Eman</title>
+  <style>
+    html, body {
+      margin: 0;
+      overflow: hidden;
+      height: 100%;
+      background: linear-gradient(180deg, #000011, #000033);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .love-text {
+      position: absolute;
+      top: 40px;
+      width: 100%;
+      text-align: center;
+      font-size: 6em;
+      color: #ff3366;
+      font-weight: bold;
+      animation: pulse 2s infinite;
+      z-index: 2;
+      text-shadow: 0 0 10px white, 0 0 20px red;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    .eman {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 4em;
+      font-weight: bold;
+      z-index: 3;
+      animation: glow 2s infinite, float 3s ease-in-out infinite;
+      color: white;
+      text-shadow:
+        0 0 5px #ff007f,
+        0 0 10px #ff007f,
+        0 0 20px #ff007f,
+        0 0 30px #ff3366;
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 0 0 10px #ff3366; }
+      50% { text-shadow: 0 0 20px #ff66a3, 0 0 40px #ff3399; }
+      100% { text-shadow: 0 0 10px #ff3366; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+      50% { transform: translate(-50%, -50%) translateY(-10px); }
+    }
+
+    .heart-particle {
+      position: absolute;
+      font-size: 18px;
+      animation: fadeIn 1.5s forwards;
+      z-index: 2;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Happy Birthday Texts */
+    .birthday {
+      position: absolute;
+      font-size: 1.8em;
+      font-weight: bold;
+      animation: fadeColor 5s ease-in-out infinite, fadeInOut 6s ease-in-out infinite;
+      z-index: 3;
+      white-space: nowrap;
+      text-shadow: 0 0 10px #fff, 0 0 20px pink, 0 0 30px #ff3399;
+    }
+
+    .left-birthday {
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+    }
+
+    .right-birthday {
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+    }
+
+    @keyframes fadeColor {
+      0%   { color: #ff3399; }
+      25%  { color: #ffcc00; }
+      50%  { color: #00ffff; }
+      75%  { color: #33ff66; }
+      100% { color: #ff3399; }
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.1; }
+      50%      { opacity: 1; }
+    }
+    .cake-button {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 30px;
+  font-size: 1.4em;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(45deg, #ff00cc, #3333ff, #00ffff, #ff3399);
+  background-size: 300% 300%;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.5),
+              0 0 30px rgba(0, 255, 255, 0.4),
+              0 0 50px rgba(255, 0, 255, 0.3);
+  animation: gradientFlow 5s ease infinite, glowPulse 2.5s ease-in-out infinite;
+  z-index: 5;
+  text-align: center;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.5),
+                0 0 20px rgba(0, 255, 255, 0.4),
+                0 0 30px rgba(255, 0, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 105, 180, 0.8),
+                0 0 45px rgba(0, 255, 255, 0.6),
+                0 0 65px rgba(255, 0, 255, 0.5);
+  }
+}
+
+.cake-button:hover {
+  transform: translateX(-50%) scale(1.05);
+  filter: brightness(1.2);
+}
+
+  </style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<div class="love-text">I LOVE YOU</div>
+<div class="eman">MARYAM</div>
+<a href="page8.html" class="cake-button">Chlo ab cake katein meri jan 😊</a>
+
+
+<!-- Happy Birthday on Left and Right -->
+<div class="birthday left-birthday">🎉 Happy Birthday 🎉</div>
+<div class="birthday right-birthday">🎉 Happy Birthday 🎉</div>
+
+<script>
+  const canvas = document.getElementById("bgCanvas");
+  const ctx = canvas.getContext("2d");
+  let w = canvas.width = window.innerWidth;
+  let h = canvas.height = window.innerHeight;
+
+  window.addEventListener("resize", () => {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  });
+
+  const stars = [];
+  for (let i = 0; i < 300; i++) {
+    stars.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 1.5,
+      alpha: Math.random(),
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.3
+    });
+  }
+
+  const lights = [];
+  for (let i = 0; i < 30; i++) {
+    lights.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      radius: Math.random() * 10 + 5,
+      hue: Math.random() * 360,
+      alpha: Math.random() * 0.5 + 0.2,
+      dx: (Math.random() - 0.5) * 0.5,
+      dy: (Math.random() - 0.5) * 0.5
+    });
+  }
+
+  function drawBackground() {
+    ctx.clearRect(0, 0, w, h);
+
+    for (let star of stars) {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${star.alpha})`;
+      ctx.fill();
+
+      star.x += star.dx;
+      star.y += star.dy;
+      if (star.x < 0 || star.x > w) star.dx *= -1;
+      if (star.y < 0 || star.y > h) star.dy *= -1;
+    }
+
+    for (let light of lights) {
+      ctx.beginPath();
+      ctx.arc(light.x, light.y, light.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${light.hue}, 100%, 60%, ${light.alpha})`;
+      ctx.fill();
+      light.x += light.dx;
+      light.y += light.dy;
+      light.hue += 0.5;
+      if (light.x < 0 || light.x > w) light.dx *= -1;
+      if (light.y < 0 || light.y > h) light.dy *= -1;
+    }
+
+    requestAnimationFrame(drawBackground);
+  }
+
+  drawBackground();
+
+  function createFlowingHeart() {
+    const centerX = w / 2;
+    const centerY = h / 2 + 50;
+    const scale = 16;
+    let t = 0;
+    let hue = 0;
+
+    function addHeartParticle() {
+      const x = scale * 16 * Math.pow(Math.sin(t), 3);
+      const y = -scale * (13 * Math.cos(t) - 5 * Math.cos(2 * t)
+               - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+
+      const span = document.createElement("span");
+      span.className = "heart-particle";
+      span.innerText = "♥♥♥";
+      span.style.left = (centerX + x) + "px";
+      span.style.top = (centerY + y) + "px";
+      span.style.color = `hsl(${hue}, 100%, 60%)`;
+      document.body.appendChild(span);
+
+      setTimeout(() => {
+        span.remove();
+      }, 4000);
+
+      t += 0.1;
+      if (t > Math.PI * 2) t = 0;
+
+      hue += 10;
+      if (hue > 360) hue = 0;
+    }
+
+    setInterval(addHeartParticle, 50);
+  }
+
+  createFlowingHeart();
+</script>
+</body>
+</html>

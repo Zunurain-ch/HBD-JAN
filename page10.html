@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Red Heart Burst Animation</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(to top, #000000, #111111);
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+let w = canvas.width = window.innerWidth;
+let h = canvas.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+});
+
+const lineColors = ['#ff0000', '#00ffff', '#ffff00', '#00ff00', '#ff00ff', '#ff9900', '#00ccff', '#ccff00', '#ff3399', '#9933ff'];
+const heartColor = '#ff0000'; // Only red hearts
+const lines = [];
+const heartBursts = [];
+
+class Line {
+  constructor() {
+    this.x = Math.random() * w;
+    this.y = h;
+    this.length = 30;
+    this.color = lineColors[Math.floor(Math.random() * lineColors.length)];
+    this.speed = 5 + Math.random() * 2;
+    this.burstHeight = h * 0.3 + Math.random() * h * 0.2;
+    this.active = true;
+  }
+
+  update() {
+    this.y -= this.speed;
+    if (this.y <= this.burstHeight && this.active) {
+      heartBursts.push(new HeartBurst(this.x, this.y));
+      this.active = false;
+    }
+  }
+
+  draw() {
+    if (this.active) {
+      ctx.strokeStyle = this.color;
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y + this.length);
+      ctx.lineTo(this.x, this.y);
+      ctx.stroke();
+    }
+  }
+
+  isFinished() {
+    return !this.active;
+  }
+}
+
+class Heart {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    const angle = Math.random() * Math.PI * 2;
+    const speed = Math.random() * 3 + 1.5;
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+    this.alpha = 1;
+    this.color = heartColor;
+    this.size = 3 + Math.random() * 2; // Smaller heart size
+  }
+
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.alpha -= 0.01;
+  }
+
+  draw() {
+    ctx.globalAlpha = this.alpha;
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.moveTo(this.x, this.y);
+    ctx.bezierCurveTo(this.x - this.size, this.y - this.size, this.x - this.size * 2, this.y + this.size, this.x, this.y + this.size * 2);
+    ctx.bezierCurveTo(this.x + this.size * 2, this.y + this.size, this.x + this.size, this.y - this.size, this.x, this.y);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
+class HeartBurst {
+  constructor(x, y) {
+    this.hearts = [];
+    for (let i = 0; i < 250; i++) {
+      this.hearts.push(new Heart(x, y));
+    }
+  }
+
+  update() {
+    this.hearts.forEach(h => h.update());
+    this.hearts = this.hearts.filter(h => h.alpha > 0);
+  }
+
+  draw() {
+    this.hearts.forEach(h => h.draw());
+  }
+
+  isFinished() {
+    return this.hearts.length === 0;
+  }
+}
+
+function spawnLines() {
+  if (lines.length < 10) {
+    lines.push(new Line());
+  }
+}
+
+function animate() {
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+  ctx.fillRect(0, 0, w, h);
+
+  spawnLines();
+
+  lines.forEach(line => {
+    line.update();
+    line.draw();
+  });
+
+  heartBursts.forEach(burst => {
+    burst.update();
+    burst.draw();
+  });
+
+  lines.splice(0, lines.filter(line => line.isFinished()).length);
+  heartBursts.splice(0, heartBursts.filter(burst => burst.isFinished()).length);
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gift</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      animation: gradientMove 15s ease infinite;
+      background-size: 400% 400%;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .title {
+      position: absolute;
+      top: 3%;
+      width: 100%;
+      text-align: center;
+      font-size: 8rem;
+      color: #ff8fab;
+      font-weight: bold;
+      text-shadow: 0 0 15px #ff99cc, 0 0 30px #ff69b4;
+      z-index: 2;
+    }
+
+    .gift-container {
+      position: absolute;
+      bottom: 30%;
+      left: 43%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      z-index: 2;
+    }
+
+    .gift-box {
+      position: absolute;
+      width: 180%;
+      height: 135%;
+      background: linear-gradient(to bottom, #ff6f91, #ff1e56);
+      border-radius: 30px;
+      box-shadow: 0 0 30px rgba(255, 105, 180, 0.7);
+      overflow: hidden;
+    }
+
+    .gift-box::before,
+    .gift-box::after {
+      content: "";
+      position: absolute;
+      background: #fff;
+    }
+
+    .gift-box::before {
+      width: 40px;
+      height: 100%;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+    }
+
+    .gift-box::after {
+      height: 40px;
+      width: 100%;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+
+    .lid {
+      position: absolute;
+      top: -30px;
+      width: 180%;
+      height: 100px;
+      background: #ff4e7a;
+      border-radius: 20px;
+      transform-origin: bottom center;
+      transition: transform 1s ease;
+      z-index: 3;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .lid.open {
+      transform: rotateX(150deg) translateY(-80px);
+    }
+
+    .bow {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50% 50% 0 0;
+      box-shadow:
+        -40px 0 0 0 #fff,
+        40px 0 0 0 #fff;
+      z-index: 4;
+    }
+
+    .btn {
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 14px 28px;
+      font-size: 1.3rem;
+      background-color: #ff4081;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 0 15px #ff4081;
+      cursor: pointer;
+      z-index: 3;
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateX(-50%) scale(1.05);
+    }
+
+    .heart-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      transition: all 1s ease;
+      z-index: 5;
+    }
+
+    .heart-container.show {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    .heart-gif {
+      width: 1000px;
+      height: 650px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 192, 203, 0.8);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      background: #ff4081;
+      color: white;
+      font-size: 24px;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff4081;
+      z-index: 6;
+    }
+
+    .light {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
+      animation: floatLight 8s linear infinite;
+      pointer-events: none;
+      filter: blur(8px);
+    }
+
+    @keyframes floatLight {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translateY(-200px) scale(1.2);
+        opacity: 0.2;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.6;
+      }
+    }
+
+    .light:nth-child(odd) {
+      background: radial-gradient(circle, rgba(255, 105, 180, 0.6) 0%, transparent 70%);
+    }
+
+    .light:nth-child(even) {
+      background: radial-gradient(circle, rgba(135, 206, 250, 0.6) 0%, transparent 70%);
+    }
+    .next-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(to right, #ff6f91, #ff3cac);
+  color: white;
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.next-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 105, 180, 0.8);
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="title">Gift</div>
+
+  <div class="gift-container">
+    <div class="lid" id="lid"></div>
+    <div class="gift-box">
+      <div class="bow"></div>
+    </div>
+  </div>
+
+  <button class="btn" onclick="openGift()">Open the Gift</button>
+
+  <!-- Heart container with close button -->
+  <div id="heartContainer" class="heart-container">
+    <button class="close-btn" onclick="closeGift()">×</button>
+    <img class="heart-gif" src="https://media4.giphy.com/media/BluswEr6kxwZm07J7w/200w.gif?cid=6c09b952vukypose6uxr7lgno9ydsdf5lpw4gvmpb1nq3y0y&ep=v1_gifs_search&rid=200w.gif&ct=g" alt="Heart GIF">
+  </div>
+
+  <script>
+    const lightCount = 30;
+    for (let i = 0; i < lightCount; i++) {
+      const light = document.createElement('div');
+      light.classList.add('light');
+      const size = Math.random() * 40 + 20;
+      light.style.width = `${size}px`;
+      light.style.height = `${size}px`;
+      light.style.left = `${Math.random() * 100}%`;
+      light.style.top = `${Math.random() * 100}%`;
+      light.style.animationDuration = `${6 + Math.random() * 5}s`;
+      document.body.appendChild(light);
+    }
+
+    function openGift() {
+      document.getElementById('lid').classList.add('open');
+      document.getElementById('heartContainer').classList.add('show');
+    }
+
+    function closeGift() {
+      document.getElementById('heartContainer').classList.remove('show');
+      document.getElementById('lid').classList.remove('open');
+    }
+  </script>
+<a href="page10.html" class="next-button">Next</a>
+
+</body>
+</html>

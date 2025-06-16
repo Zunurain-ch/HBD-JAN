@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romantic Surprises</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0a0a1a, #000033, #000066);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            font-size: 5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            text-shadow: 0 0 10px #66a3ff, 
+                         0 0 20px #66a3ff, 
+                         0 0 30px #66a3ff;
+            animation: pulse 3s infinite;
+            z-index: 10;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Colorful Lights */
+        .light {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(30px);
+            opacity: 0.7;
+            animation: float 15s infinite linear;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(100px, 100px) rotate(360deg); }
+        }
+
+        /* Colorful Lines */
+        .line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+            animation: lineMove 20s infinite linear;
+            transform-origin: left center;
+            z-index: 1;
+        }
+
+        @keyframes lineMove {
+            0% { transform: rotate(0deg) scale(0); }
+            50% { transform: rotate(180deg) scale(1); }
+            100% { transform: rotate(360deg) scale(0); }
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 30px;
+            z-index: 10;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .romantic-btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, #0066ff, #66a3ff);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(102, 163, 255, 0.6);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .romantic-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(102, 163, 255, 0.8);
+        }
+
+        .romantic-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0.3) 0%,
+                rgba(255,255,255,0) 60%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -50%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: linear-gradient(135deg, #001a33, #003366);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 100;
+            text-align: center;
+            font-size: 1.5rem;
+            color: white;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #66a3ff;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            z-index: 101;
+        }
+
+        .close-btn:hover {
+            background: #0066ff;
+            transform: rotate(90deg);
+        }
+
+        .floating-stars {
+            position: absolute;
+            font-size: 1.2rem;
+            animation: floatUp 5s linear infinite;
+            opacity: 0;
+            z-index: 5;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .next-button {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            padding: 20px 50px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: #ff0000;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .next-button:hover {
+            background-color: #ff3333;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6);
+        }
+        
+        .next-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 10px rgba(255, 0, 0, 0.4);
+        }
+        
+        .next-button::after {
+            content: '→';
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .next-button:hover::after {
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body>
+    <h1>Surprise Page</h1>
+
+    <div class="button-container">
+        <div class="button-row">
+            <button class="romantic-btn" id="btn1">Surprise 1</button>
+            <button class="romantic-btn" id="btn2">Surprise 2</button>
+            <button class="romantic-btn" id="btn3">Surprise 3</button>
+        </div>
+        <div class="button-row">
+            <button class="romantic-btn" id="btn4">Surprise 4</button>
+            <button class="romantic-btn" id="btn5">Surprise 5</button>
+            <button class="romantic-btn" id="btn6">Surprise 6</button>
+        </div>
+    </div>
+
+    <!-- Quote Popups -->
+    <div class="popup" id="popup1">
+        <button class="close-btn" onclick="closePopup('popup1')">×</button>
+        <p>"In English we say 🤍
+<br>
+❤ You are my last wish✨
+<br>
+ 💗But in  shayari💫
+<br>
+💞 حاصل تو بہت کچھ کرنا تھا مجھے زندگی میں💫 
+<br>
+ مگر جب تم🌹 آئے تو حسرتیں تم تک ہی محدود رہ گئیں.💗"</p>
+    </div>
+
+    <div class="popup" id="popup2">
+        <button class="close-btn" onclick="closePopup('popup2')">×</button>
+        <p>"🌹بعض الوجوه رِزق للعيون✨
+<br>
+💗بعض چہرے آنکھوں کا💞 رِزق ہوتے ہیں♥"</p>
+    </div>
+    <div class="popup" id="popup3">
+        <button class="close-btn" onclick="closePopup('popup3')">×</button>
+        <p>"💞تیری آنکھوں کی سہولت ہو میسر جس کو🌹
+            <br>
+💕وہ بھلا چاند ستاروں کو کہاں دیکھے گا 😌
+<br><br>
+💓روبرو حسن ہو، جب حسن بھی تیرے جیسا ❣🌹
+<br>
+✨پھر کوئی دل کے خساروں کو کہاں دیکھے گا🌷</p>
+    </div>
+
+    <div class="popup" id="popup4">
+        <button class="close-btn" onclick="closePopup('popup4')">×</button>
+        <p>"جام پر جام پینے سے کیا فائدہ💁 
+            <br>
+صبح تک تو ساری اتر جائے گی😌
+<br><br>
+تیری نظروں👁 سے پی ہے خدا کی قسم 🙃
+<br>
+عمر ساری نشے میں گزر جائے گی 💞"</p>
+    </div>
+    <div class="popup" id="popup5">
+        <button class="close-btn" onclick="closePopup('popup5')">×</button>
+        <p>"Iمیری روح کے ہر زرے میں✨
+            <br>
+ جو لمس ‏بس چکا ہے💐
+  <br>
+ وہ صرف تمہارا ہے🌹
+  <br>
+‏میرے خیالات💫
+ <br>
+ میری خواہشات کا سلسلہ💕
+  <br>
+‏تم سے شروع ہو کر❤
+ <br>
+ تم پر ہی💗
+  <br>
+ تمام ہوتا ہے🌹
+  <br>
+‏تم ہو تو💗 
+ <br>
+میں ہو! 🙃
+ <br>
+‏تم نہیں تو😞
+ <br>
+کچھ بھی نہیں !🥀"</p>
+    </div>
+
+
+    <div class="popup" id="popup6">
+        <button class="close-btn" onclick="closePopup('popup6')">×</button>
+        <p>💞روح من 💞
+            <br>
+کیا تم نے کبھی محبت دیکھی ہے ؟
+            <br>
+میں نے دیکھی ہے ۔۔۔
+            <br>
+تمہارا چہرہ محبت ہے ♥
+<br>
+کیا تم نے کبھی محبت سنی ہے ؟
+<br>
+میں نے سنی ہے ۔۔۔۔۔
+<br>
+تمہاری باتیں محبت ہیں 🌹
+<br>
+تم نے کبھی محبت کو مسکراتے دیکھا ہے ؟
+<br>
+میں نے دیکھا ہے ۔۔۔۔۔
+<br>
+تمہارا مسکرانا ہی محبت ہے 🥰
+<br>
+تم نے کبھی محبت محسوس کی ہے؟ 
+<br>
+میں نے محسوس کی ہے۔۔۔۔ 
+<br>
+تمہارا وجود محبت ہے❣ 
+<br>
+تم نے کبھی محبت کی ہے ؟
+<br>
+میں نے کی ہے ۔۔۔۔
+<br>
+تم ہی تو ہو محبت ♥♥♥
+           <br><br>
+
+     
+    <script>
+        // Create colorful lights
+        function createLights() {
+            const colors = ['#ff69b4', '#ff8c00', '#ffd700', '#7cfc00', '#00bfff', '#9370db'];
+            
+            for (let i = 0; i < 15; i++) {
+                const light = document.createElement('div');
+                light.className = 'light';
+                const size = Math.random() * 200 + 100;
+                light.style.width = `${size}px`;
+                light.style.height = `${size}px`;
+                light.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random() * colors.length)]}, transparent)`;
+                light.style.left = `${Math.random() * 100}%`;
+                light.style.top = `${Math.random() * 100}%`;
+                light.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                light.style.animationDelay = `${Math.random() * 5}s`;
+                document.body.appendChild(light);
+            }
+        }
+
+        // Create colorful lines
+        function createLines() {
+            for (let i = 0; i < 10; i++) {
+                const line = document.createElement('div');
+                line.className = 'line';
+                line.style.width = `${Math.random() * 300 + 100}px`;
+                line.style.left = `${Math.random() * 100}%`;
+                line.style.top = `${Math.random() * 100}%`;
+                line.style.animationDuration = `${Math.random() * 15 + 10}s`;
+                line.style.animationDelay = `${Math.random() * 5}s`;
+                document.body.appendChild(line);
+            }
+        }
+
+        // Button event listeners
+        document.getElementById('btn1').addEventListener('click', function() {
+            document.getElementById('popup1').style.display = 'block';
+            createStars();
+        });
+
+        document.getElementById('btn2').addEventListener('click', function() {
+            document.getElementById('popup2').style.display = 'block';
+            createStars();
+        });
+
+        document.getElementById('btn3').addEventListener('click', function() {
+            document.getElementById('popup3').style.display = 'block';
+            createStars();
+        });
+
+        document.getElementById('btn4').addEventListener('click', function() {
+            document.getElementById('popup4').style.display = 'block';
+            createStars();
+        });
+
+        document.getElementById('btn5').addEventListener('click', function() {
+            document.getElementById('popup5').style.display = 'block';
+            createStars();
+        });
+
+        document.getElementById('btn6').addEventListener('click', function() {
+            document.getElementById('popup6').style.display = 'block';
+            createStars();
+        });
+
+        function closePopup(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function createStars() {
+            const stars = ['✦', '✧', '✷', '✶', '✵', '✸', '✹'];
+            
+            for (let i = 0; i < 15; i++) {
+                const star = document.createElement('div');
+                star.className = 'floating-stars';
+                star.innerHTML = stars[Math.floor(Math.random() * stars.length)];
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.bottom = '0';
+                star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                star.style.color = `hsl(${Math.random() * 60 + 200}, 100%, ${Math.random() * 30 + 70}%)`;
+                document.body.appendChild(star);
+                
+                setTimeout(() => {
+                    star.remove();
+                }, 5000);
+            }
+        }
+
+        // Initialize effects
+        window.onload = function() {
+            createLights();
+            createLines();
+            
+           
+        };
+    </script>
+   <a href="page7.html" class="next-button">Big Suprise💞</a>
+    
+    <script>
+        // Optional: Add animation on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const nextBtn = document.querySelector('.next-button');
+            setTimeout(() => {
+                nextBtn.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    nextBtn.style.transform = 'scale(1)';
+                }, 300);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
